@@ -4,8 +4,8 @@ let prefix = 'dzp.';
 let shop = {
   'status': 1
 };
-let admin = '291149768397422593';
-let cha = '381805317241176065';
+let cha = '291149768397422593';
+let admin = '381805317241176065';
 let stock = '';
 bot.on("ready", () => {
     bot.user.setPresence({ game: { name: `คำสั่ง ${prefix}help | สร้างโดย Chakung#0785` }, type: 0 });
@@ -75,7 +75,7 @@ bot.on('message', message => {
         message.delete()
         const embed = new Discord.RichEmbed()
         .setColor(0xfff000)
-        .addField('รายการคำสั่งสำหรับคนขาย','**dzp.open** : เปิดร้าน\n\n**dzp.close** : ปิดร้าน\n\n**dzp.say** [ข้อความ] : บอทพิมพ์ข้อความตามที่เราพิมพ์\nตัวอย่าง `d.say สวัสดี`\n\n**dzp.embed** [สีเลข6ตัว] [หัวข้อ] [เนื้อหา] : บอทจะส่งข้อความแบบมีกรอบ\nตัวอย่าง`d.embed 886688 ประกาศ วันนี้แอดมินไม่อยู่`\n\nd.give [เวลา(หน่วยเป็นนาที)] [ชื่อไอเทม] : บอทนับถอยหลังแจกของ\n`ตัวอย่างd.give 10 Pet-Eggs'+
+        .addField('รายการคำสั่งสำหรับคนขาย','**dzp.open** : เปิดร้าน\n\n**dzp.close** : ปิดร้าน\n\n**dzp.say** [ข้อความ] : บอทพิมพ์ข้อความตามที่เราพิมพ์\nตัวอย่าง `dzp.say สวัสดี`\n\n**dzp.embed** [สีเลข6ตัว] [หัวข้อ] [เนื้อหา] : บอทจะส่งข้อความแบบมีกรอบ\nตัวอย่าง `dzp.embed 886688 ประกาศ วันนี้แอดมินไม่อยู่` (กรุณาเว้นวรรคให้ถูกต้อง)\n\n'+
         '')
         .setFooter('DZP Shop | สร้างโดย Chakung', bot.user.avatarURL)
         message.channel.sendEmbed(embed);
@@ -85,20 +85,22 @@ bot.on('message', message => {
         message.delete()
         shop.status = 1;
         const embed = new Discord.RichEmbed()
-        .addField('คำสั่งเปิดร้าน','ตอนนี้ร้านเปิดแล้ว ตรวจสถานะของร้าน '+prefix+'status')
+        .addField('สถานะของร้าน','ตอนนี้ร้านเปิดแล้ว!')
         .setColor(0x00ff00)
         .setFooter('DZP Shop | สร้างโดย Chakung', bot.user.avatarURL)
         message.channel.sendEmbed(embed);
+        message.channel.send(`@everyone ร้านเปิดแล้วนะงับ ทักหา <@${admin}> เพื่อซื้อได้เลย! `);
     }
     if (command === 'close')
     {
         message.delete()
         shop.status = 0;
         const embed = new Discord.RichEmbed()
-        .addField('คำสั่งปิดร้าน','ตอนนี้ร้านปิดแล้ว ตรวจสถานะของร้าน '+prefix+'status')
+        .addField('สถานะของร้าน','ร้านปิดแล้ว!')
         .setColor(0xff0000)
         .setFooter('DZP Shop | สร้างโดย Chakung', bot.user.avatarURL)
         message.channel.sendEmbed(embed);
+        message.channel.send('ร้านปิดไม่ควรที่จะทัก ตรวจสอบสถานะร้าน โดย **dzp.status** @everyone');
     }
     if (command === 'say')
     {
@@ -129,7 +131,7 @@ bot.on('message', message => {
         .setTimestamp();
         message.channel.sendEmbed(embed);
     }
-    if (command === 'give')
+    if (command === 'givevvv')
     {
         message.delete()
         let time = message.content.split(' ')[1];
