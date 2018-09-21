@@ -1,5 +1,5 @@
 const Discord = require("discord.js");
-const bot = new Discord.Client({disableEveryone: true});
+const bot = new Discord.Client();
 let prefix = 'dzp.';
 let shop = {
   'status': 1
@@ -90,7 +90,7 @@ bot.on('message', message => {
         .setFooter('DZP Shop | สร้างโดย Chakung', bot.user.avatarURL)
         message.channel.sendEmbed(embed)
         .then(message => {
-            message.channel.send("<@everyone>"+` ร้านเปิดแล้วนะงับ ทักหา <@${admin}> เพื่อซื้อได้เลย! `);
+            message.channel.send("@everyone"+` ร้านเปิดแล้วนะงับ ทักหา <@${admin}> เพื่อซื้อได้เลย! `);
         })
     }
     if (command === 'close')
@@ -103,7 +103,7 @@ bot.on('message', message => {
         .setFooter('DZP Shop | สร้างโดย Chakung', bot.user.avatarURL)
         message.channel.sendEmbed(embed)
         .then(message => {
-            message.channel.send("⚠ ร้านปิดเเล้วน่ะครับ ⚠ ห้ามโอนมานะครับหรือห้ามทัก!! สามารถ ตรวจสอบสถานะร้านได้ dzp.status นะครับ <@everyone>");
+            message.channel.send("⚠ ร้านปิดเเล้วน่ะครับ ⚠ ห้ามโอนมานะครับหรือห้ามทัก!! สามารถ ตรวจสอบสถานะร้านได้ dzp.status นะครับ @everyone");
         })
     }
     if (command === 'say')
