@@ -9,7 +9,7 @@ let cha = '381805317241176065';
 let stock = '';
 bot.on("ready", () => {
     bot.user.setPresence({ game: { name: `คำสั่ง ${prefix}help | สร้างโดย Chakung#0785` }, type: 0 });
-    console.log("New DZP Shop bot online! Created by Chakung.");
+    console.log("New 2 DZP Shop bot online! Created by Chakung.");
 });
 bot.on('message', message => {
     if(!message.content.startsWith(prefix)) return;
@@ -57,9 +57,9 @@ bot.on('message', message => {
 });
 
 bot.on('message', message => {
-    let owner = message.author.id;
-    if(owner != '291149768397422593' || owner != '381805317241176065') return message.reply('คุณยังไม่ได้เป็นเจ้าของบอท');
     if(!message.content.startsWith(prefix)) return;
+    let owner = message.author.id;
+    if(owner !== '291149768397422593' && owner !== '381805317241176065') return message.reply('คุณยังไม่ได้เป็นเจ้าของบอท');
     let command = message.content.split(' ')[0];
     command = command.slice(prefix.length);
     var args = message.content.split(' ').slice(1);
