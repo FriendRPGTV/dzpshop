@@ -62,8 +62,8 @@ bot.on('message', message => {
     let command = message.content.split(' ')[0];
     command = command.slice(prefix.length);
     var args = message.content.split(' ').slice(1);
-    for (let i = 0; i < admin.length; i++)
-        if(message.author.id !== admin[i]) return;
+    if(message.author.id !== admin[0] || message.author.id !== admin[1]) return;
+        
     if(command === 'admin') {
         message.delete()
         const embed = new Discord.RichEmbed()
