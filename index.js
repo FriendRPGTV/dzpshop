@@ -9,7 +9,7 @@ let admin = '381805317241176065';
 let stock = '';
 bot.on("ready", () => {
     bot.user.setPresence({ game: { name: `คำสั่ง ${prefix}help | สร้างโดย Chakung#0785` }, type: 0 });
-    console.log("New 3 DZP Shop bot online! Created by Chakung.");
+    console.log("[5] DZP Shop bot online! Created by Chakung.");
 });
 bot.on('message', message => {
     if(!message.content.startsWith(prefix)) return;
@@ -90,7 +90,7 @@ bot.on('message', message => {
         .setFooter('DZP Shop | สร้างโดย Chakung', bot.user.avatarURL)
         message.channel.sendEmbed(embed)
         .then(message => {
-            message.channel.send('@everyone'+` ร้านเปิดแล้วนะงับ ทักหา <@${admin}> เพื่อซื้อได้เลย! `);
+            message.channel.send("@everyone"+` ร้านเปิดแล้วนะงับ ทักหา <@${admin}> เพื่อซื้อได้เลย! `);
         })
     }
     if (command === 'close')
@@ -103,7 +103,7 @@ bot.on('message', message => {
         .setFooter('DZP Shop | สร้างโดย Chakung', bot.user.avatarURL)
         message.channel.sendEmbed(embed)
         .then(message => {
-            message.channel.send('ร้านปิดไม่ควรที่จะทัก ตรวจสอบสถานะร้าน โดย **dzp.status** @everyone');
+            message.channel.send("⚠ ร้านปิดเเล้วน่ะครับ ⚠ ห้ามโอนมานะครับหรือห้ามทัก!! สามารถ ตรวจสอบสถานะร้านได้ dzp.status นะครับ  @everyone");
         })
     }
     if (command === 'say')
