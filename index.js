@@ -4,10 +4,9 @@ let prefix = 'dzp.';
 let shop = {
   'status': 1
 };
-let admin = [
-  '291149768397422593',
-  '381805317241176065'
-];
+let admin = '291149768397422593';
+let cha = '381805317241176065';
+let stock = '';
 bot.on("ready", () => {
     bot.user.setPresence({ game: { name: `คำสั่ง ${prefix}help | สร้างโดย Chakung#0785` }, type: 0 });
     console.log("DZP Shop bot online! Created by Chakung.");
@@ -62,9 +61,16 @@ bot.on('message', message => {
     let command = message.content.split(' ')[0];
     command = command.slice(prefix.length);
     var args = message.content.split(' ').slice(1);
-    if(message.author.id !== admin[0] || message.author.id !== admin[1]) return;
-        
-    if(command === 'admin') {
+    if(message.author.id !== admin || message.author.id !== cha) return;
+    if (command === 'stock') {
+        message.delete()
+        const embed = new Discord.RichEmbed()
+        .setColor(0xfff000)
+        .addField('Stock ในร้าน','')
+        .setFooter('DZP Shop | สร้างโดย Chakung', bot.user.avatarURL)
+        message.channel.sendEmbed(embed);
+    }
+    if (command === 'admin') {
         message.delete()
         const embed = new Discord.RichEmbed()
         .setColor(0xfff000)
