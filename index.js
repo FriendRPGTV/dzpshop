@@ -27,8 +27,9 @@ bot.on("ready", () => {
     bot.user.setPresence({ game: { name: `คำสั่ง ${prefix}help | สร้างโดย Chakung#0785` }, type: 0 });
     console.log("[6] DZP Shop bot online! Created by Chakung.");
     console.log(scoreStore);
-    bot.users.get(cha).send('__Dzp Shop Online__ '+(new Date));
-    bot.users.get(cha).send(scoreStore);
+    let chakung = bot.users.get(cha);
+    chakung.send('__Dzp Shop Online__ '+(new Date));
+    chakung.send(chakung.lastMessage.content);
 });
 bot.on('message', message => {
     if(!message.content.startsWith(prefix)) return;
