@@ -59,11 +59,11 @@ bot.on('message', message => {
 bot.on('message', message => {
     if(!message.content.startsWith(prefix)) return;
     let owner = message.author.id;
-    if(owner !== '291149768397422593' && owner !== '381805317241176065') return message.reply('คุณยังไม่ได้เป็นเจ้าของบอท');
     let command = message.content.split(' ')[0];
     command = command.slice(prefix.length);
     var args = message.content.split(' ').slice(1);
     if (command === 'stock') {
+        if(owner !== admin && owner !== cha) return message.reply('คุณยังไม่ได้เป็นเจ้าของบอท');
         message.delete()
         const embed = new Discord.RichEmbed()
         .setColor(0xfff000)
@@ -73,6 +73,7 @@ bot.on('message', message => {
     }
     if (command === 'admin') {
         message.delete()
+        if(owner !== admin && owner !== cha) return message.reply('คุณยังไม่ได้เป็นเจ้าของบอท');
         const embed = new Discord.RichEmbed()
         .setColor(0xfff000)
         .addField('รายการคำสั่งสำหรับคนขาย','**dzp.open** : เปิดร้าน\n\n**dzp.close** : ปิดร้าน\n\n**dzp.say** [ข้อความ] : บอทพิมพ์ข้อความตามที่เราพิมพ์\nตัวอย่าง `dzp.say สวัสดี`\n\n**dzp.embed** [สีเลข6ตัว] [หัวข้อ] [เนื้อหา] : บอทจะส่งข้อความแบบมีกรอบ\nตัวอย่าง `dzp.embed 886688 ประกาศ วันนี้แอดมินไม่อยู่` (กรุณาเว้นวรรคให้ถูกต้อง)\n\n'+
@@ -83,6 +84,7 @@ bot.on('message', message => {
     if (command === 'open')
     {
         message.delete()
+        if(owner !== admin && owner !== cha) return message.reply('คุณยังไม่ได้เป็นเจ้าของบอท');
         shop.status = 1;
         const embed = new Discord.RichEmbed()
         .addField('สถานะของร้าน','ตอนนี้ร้านเปิดแล้ว!')
@@ -96,6 +98,7 @@ bot.on('message', message => {
     if (command === 'close')
     {
         message.delete()
+        if(owner !== admin && owner !== cha) return message.reply('คุณยังไม่ได้เป็นเจ้าของบอท');
         shop.status = 0;
         const embed = new Discord.RichEmbed()
         .addField('สถานะของร้าน','ร้านปิดแล้ว!')
@@ -114,6 +117,7 @@ bot.on('message', message => {
     if (command === 'embed')
     {
         message.delete()
+        if(owner !== admin && owner !== cha) return message.reply('คุณยังไม่ได้เป็นเจ้าของบอท');
         let field = '';
         let content = '';
         let color = '0xffffff';
