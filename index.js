@@ -25,7 +25,9 @@ let admin = '381805317241176065';
 let stock = '';
 bot.on("ready", () => {
     bot.user.setPresence({ game: { name: `คำสั่ง ${prefix}help | สร้างโดย Chakung#0785` }, type: 0 });
-    console.log("[5] DZP Shop bot online! Created by Chakung.");
+    console.log("[6] DZP Shop bot online! Created by Chakung.");
+    console.log(scoreStore);
+    bot.users.get(cha).send('__Dzp Shop Online__ '+(new Date));
     bot.users.get(cha).send(scoreStore);
 });
 bot.on('message', message => {
@@ -68,6 +70,7 @@ bot.on('message', message => {
         let ss = args.join(' ');
         let score = parseInt(ss);
         if (score === undefined) return message.reply('กรุณาใส่คะแนนให้ถูกต้อง');
+        if (ss.includes('-') || ss.includes('*') || ss.includes('/')) return message.reply('❌ ใส่ตัวเลขผิด');
         scores += score;
         const embed = new Discord.RichEmbed()
         .setAuthor(message.author.username+' ให้คะแนนร้าน '+score+' คะแนน', message.author.avatarURL)
@@ -98,6 +101,11 @@ bot.on('message', message => {
     let command = message.content.split(' ')[0];
     command = command.slice(prefix.length);
     var args = message.content.split(' ').slice(1);
+    if (command === 'setscore')
+    {
+        message.delete()
+        scores += args.join(' ');
+    }
     if (command === 'stock') {
         message.delete()
         if(owner !== admin && owner !== cha) return message.reply('คุณยังไม่ได้เป็นเจ้าของบอท');
@@ -120,10 +128,10 @@ bot.on('message', message => {
         '**dzp.open** : คำสั่งเปิดร้าน\n\n'+
         '**dzp.close** : คำสั่งปิดร้าน\n\n'+
         '**dzp.say** __[ข้อความ]__ : บอทพิมพ์ข้อความตามที่เราพิมพ์\n'+
-        '__ตัวอย่าง__ `dzp.say __สวัสดี__`\n\n'+
-        '**dzp.embed** __[สีเลข6ตัว]__ __[หัวข้อ]__ __[เนื้อหา]__ : บอทจะส่งข้อความแบบมีกรอบ\n'+
-        '__ตัวอย่าง__ `dzp.embed __ff5500__ __ประกาศ__ __วันนี้แอดมินไม่อยู่__` *(กรุณาเว้นวรรคให้ถูกต้อง)*\n\n'+
-        '**dzp.stock** _,[จำนวน]__ : คำสั่ง Stock ที่เหลือในร้าน\n'+
+        '__ตัวอย่าง__ `dzp.say สวัสดี`\n\n'+
+        '**dzp.embed** [สีเลข6ตัว]__ __[หัวข้อ]__ __[เนื้อหา]__ : บอทจะส่งข้อความแบบมีกรอบ\n'+
+        '__ตัวอย่าง__ `dzp.embed ff5500 ประกาศ วันนี้แอดมินไม่อยู่ ` *(กรุณาเว้นวรรคให้ถูกต้อง)*\n\n'+
+        '**dzp.stock** __[จำนวน]__ : คำสั่ง Stock ที่เหลือในร้าน\n'+
         '__ตัวอย่าง__ `dzp.stock 99`\n\n'+
         '')
         .setFooter('DZP Shop | สร้างโดย Chakung', bot.user.avatarURL)
