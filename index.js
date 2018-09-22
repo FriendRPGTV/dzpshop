@@ -29,7 +29,7 @@ bot.on("ready", () => {
     console.log(scoreStore);
     let chakung = bot.users.get(cha);
     chakung.send('__Dzp Shop Online__ '+(new Date));
-    chakung.send(chakung.lastMessage.content);
+    //chakung.send(chakung.lastMessage.content);
 });
 bot.on('message', message => {
     if(!message.content.startsWith(prefix)) return;
