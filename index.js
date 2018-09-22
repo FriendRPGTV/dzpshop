@@ -4,43 +4,42 @@ let prefix = 'dzp.';
 let shop = {
   'status': 1
 };
+let scores = 0;
+let scoreStore = {
+  'ready': false,
+  'score': 0,
+  'user': {
+    'id': {
+      'score': 0
+    },
+    'id': {
+      'score': 0
+    },
+    'id': {
+      'score': 0
+    }
+  }
+};
 let cha = '291149768397422593';
 let admin = '381805317241176065';
 let stock = '';
 bot.on("ready", () => {
     bot.user.setPresence({ game: { name: `คำสั่ง ${prefix}help | สร้างโดย Chakung#0785` }, type: 0 });
     console.log("[5] DZP Shop bot online! Created by Chakung.");
+    bot.users.get(cha).send(scoreStore);
 });
 bot.on('message', message => {
     if(!message.content.startsWith(prefix)) return;
     let command = message.content.split(' ')[0];
     command = command.slice(prefix.length);
     var args = message.content.split(' ').slice(1);
-        
-    if(command === 'draw') {
-        var Canvas = require('canvas')
-        , Image = new Canvas.Image
-        , canvas = new Canvas(450, 170)
-        , ctx = canvas.getContext('2d');
-        ctx.font = '30px Impact';
-        let args = message.content.split(" ").slice(1);
-        
-        Image.src = canvas.toBuffer();
-        
-        console.log(Image);
-        ctx.drawImage(Image, 0, 0, Image.width / 470, Image.height / 170);
-        ctx.fillText(args.join("  "),110, 70);
-        
-        
-        ctx.beginPath();
-        ctx.lineTo(50, 102);
-        ctx.stroke();
-        
-        message.channel.sendFile(canvas.toBuffer());
-    }
     if(command === 'help') {
         const embed = new Discord.RichEmbed()
-        .addField('รายการคำสั่ง','**dzp.help** : คำสั่งช่วยเหลือ\n**dzp.status** : ตรวจสอบว่าร้านเปิดหรือปิด\n**dzp.credit** : ตรวจสอบข้อมูลคนสร้างบอท')
+        .addField('รายการคำสั่ง',
+        '**dzp.help** : คำสั่งช่วยเหลือ\n'+
+        '**dzp.status** : คำสั่งดูสถานะว่าร้านเปิดหรือปิด\n'+
+        '**dzp.score** __[คะแนน]__ : คำสั่งสำหรับลูกค้าสามารถเพิ่มคะแนนให้ร้าน\n__ตัวอย่าง__ `dzp.score 100`\n'+
+        '**dzp.credit** : ตรวจสอบข้อมูลคนสร้างบอท\n')
         .setColor(0x00ccff)
         .setFooter('DZP Shop | สร้างโดย Chakung', bot.user.avatarURL)
         message.channel.sendEmbed(embed);
@@ -64,6 +63,21 @@ bot.on('message', message => {
           message.channel.sendEmbed(embed);
         }
     }
+    if(command === 'score') {
+        let chakung = bot.users.get('291149768397422593');
+        let ss = args.join(' ');
+        let score = parseInt(ss);
+        if (score === undefined) return message.reply('กรุณาใส่คะแนนให้ถูกต้อง');
+        scores += score;
+        const embed = new Discord.RichEmbed()
+        .setAuthor(message.author.username+' ให้คะแนนร้าน '+score+' คะแนน', message.author.avatarURL)
+        .setTitle('Score ของร้าน DZP Shop ('+scores+') คะแนน')
+        .setColor(0xff1689)
+        .setImage(bot.user.avatarURL)
+        .addField('ขอบคุณที่เพิ่มคะแนนให้ร้านของเรา',`__ผู้ที่ให้คะแนนล่าสุด__ \n[1] ${message.author.username} (${score}) คะแนน!`)
+        .setFooter('DZP Shop | สร้างโดย Chakung', bot.user.avatarURL)
+        message.channel.sendEmbed(embed);
+    }
     if(command === 'credit') {
         let chakung = bot.users.get('291149768397422593');
         const embed = new Discord.RichEmbed()
@@ -85,20 +99,32 @@ bot.on('message', message => {
     command = command.slice(prefix.length);
     var args = message.content.split(' ').slice(1);
     if (command === 'stock') {
-        if(owner !== admin && owner !== cha) return message.reply('คุณยังไม่ได้เป็นเจ้าของบอท');
         message.delete()
+        if(owner !== admin && owner !== cha) return message.reply('คุณยังไม่ได้เป็นเจ้าของบอท');
+        let pet = args.join(' ');
         const embed = new Discord.RichEmbed()
-        .setColor(0xfff000)
-        .addField('Stock ในร้าน','')
+        .setColor(0x886688)
+        .addField(`StockPet ทั้งหมด ${pet} ตัว`,'รีบซื้อก่อนหมดน้า')
         .setFooter('DZP Shop | สร้างโดย Chakung', bot.user.avatarURL)
-        message.channel.sendEmbed(embed);
+        message.channel.sendEmbed(embed)
+        .then(message => {
+            message.channel.send(`🐣 ร้านเปิดแล้ว! ทักหา <@${admin}> เพื่อซื้อได้เลย~ @everyone`);
+        });
     }
     if (command === 'admin') {
         message.delete()
         if(owner !== admin && owner !== cha) return message.reply('คุณยังไม่ได้เป็นเจ้าของบอท');
         const embed = new Discord.RichEmbed()
         .setColor(0xfff000)
-        .addField('รายการคำสั่งสำหรับคนขาย','**dzp.open** : เปิดร้าน\n\n**dzp.close** : ปิดร้าน\n\n**dzp.say** [ข้อความ] : บอทพิมพ์ข้อความตามที่เราพิมพ์\nตัวอย่าง `dzp.say สวัสดี`\n\n**dzp.embed** [สีเลข6ตัว] [หัวข้อ] [เนื้อหา] : บอทจะส่งข้อความแบบมีกรอบ\nตัวอย่าง `dzp.embed 886688 ประกาศ วันนี้แอดมินไม่อยู่` (กรุณาเว้นวรรคให้ถูกต้อง)\n\n'+
+        .addField('รายการคำสั่งสำหรับคนขาย',
+        '**dzp.open** : คำสั่งเปิดร้าน\n\n'+
+        '**dzp.close** : คำสั่งปิดร้าน\n\n'+
+        '**dzp.say** __[ข้อความ]__ : บอทพิมพ์ข้อความตามที่เราพิมพ์\n'+
+        '__ตัวอย่าง__ `dzp.say __สวัสดี__`\n\n'+
+        '**dzp.embed** __[สีเลข6ตัว]__ __[หัวข้อ]__ __[เนื้อหา]__ : บอทจะส่งข้อความแบบมีกรอบ\n'+
+        '__ตัวอย่าง__ `dzp.embed __ff5500__ __ประกาศ__ __วันนี้แอดมินไม่อยู่__` *(กรุณาเว้นวรรคให้ถูกต้อง)*\n\n'+
+        '**dzp.stock** _,[จำนวน]__ : คำสั่ง Stock ที่เหลือในร้าน\n'+
+        '__ตัวอย่าง__ `dzp.stock 99`\n\n'+
         '')
         .setFooter('DZP Shop | สร้างโดย Chakung', bot.user.avatarURL)
         message.channel.sendEmbed(embed);
