@@ -4,6 +4,7 @@ let prefix = 'dzp.';
 let shop = {
   'status': 1
 };
+let time = '18:00-22:00';
 let scores = 0;
 let scoreStore = {
   'ready': false,
@@ -76,12 +77,21 @@ bot.on('message', message => {
         const embed = new Discord.RichEmbed()
         .addField('รายการคำสั่ง',
         '**dzp.help** : คำสั่งช่วยเหลือ\n'+
+        '**dzp.time** : คำสั่งดูเวลาเปิดร้าน\n'+
         '**dzp.status** : คำสั่งดูสถานะว่าร้านเปิดหรือปิด\n'+
         '**dzp.score** __[คะแนน]__ : คำสั่งสำหรับลูกค้าสามารถเพิ่มคะแนนให้ร้าน\n__ตัวอย่าง__ `dzp.score 100`\n'+
         '**dzp.credit** : ตรวจสอบข้อมูลคนสร้างบอท\n')
         .setColor(0x00ccff)
         .setFooter('DZP Shop | สร้างโดย Chakung', bot.user.avatarURL)
         message.channel.sendEmbed(embed);
+    }
+    if (command === 'time')
+    {
+        const embed = new Discord.RichEmbed()
+        .addField('เวลาทำการ','เวลา : '+time)
+        .setColor(0x00ff00)
+        .setFooter('DZP Shop | สร้างโดย Chakung', bot.user.avatarURL)
+        message.channel.sendEmbed(embed)
     }
     if (command === 'status')
     {
@@ -109,7 +119,7 @@ bot.on('message', message => {
         if (score === undefined) return message.reply('กรุณาใส่คะแนนให้ถูกต้อง');
         if (ss.includes('-') || ss.includes('*') || ss.includes('/')) return message.reply('❌ ใส่ตัวเลขผิด');
         scores += score;
-        updateScore()
+        updateScore();
         let a2 = scoreStore.us2.split('=');
         let a3 = scoreStore.us3.split('=');
         let a4 = scoreStore.us4.split('=');
@@ -122,8 +132,7 @@ bot.on('message', message => {
         .setImage(bot.user.avatarURL)
         .addField('ขอบคุณที่เพิ่มคะแนนให้ร้านของเรา',`__ผู้ที่ให้คะแนนล่าสุด__ \n[1] ${message.author.username} (${score}) คะแนน!\n[2] ${a2[0]} (${a2[1]}) คะแนน!\n[3] ${a3[0]} (${a3[1]}) คะแนน!\n[4] ${a4[0]} (${a4[1]}) คะแนน!\n[5] ${a5[0]} (${a5[1]}) คะแนน!`)
         .setFooter('DZP Shop | สร้างโดย Chakung', bot.user.avatarURL)
-        message.channel.sendEmbed(embed)
-        
+        message.channel.sendEmbed(embed);
     }
     if(command === 'credit') {
         let chakung = bot.users.get('291149768397422593');
@@ -145,10 +154,20 @@ bot.on('message', message => {
     let command = message.content.split(' ')[0];
     command = command.slice(prefix.length);
     var args = message.content.split(' ').slice(1);
-    
+    if (command === 'settime')
+    {
+        message.delete()
+        if(!message.member.hasPermission(['ADMINISTRATOR']) && owner !== cha) return message.reply(`❌ คุณไม่ได้รับอนุญาติให้ใช้คำสั่ง ~~${message.content}~~`);
+        time = args.join(' ');
+        const embed = new Discord.RichEmbed()
+        .addField('ตั้งเวลา','เวลา : '+time)
+        .setColor(0xffffff)
+        .setFooter('DZP Shop | สร้างโดย Chakung', bot.user.avatarURL)
+        message.channel.sendEmbed(embed)
+    }
     if (command === 'restart')
     {
-      if (message.author.id !== admin) return message.reply('⚠ คุณไม่สามารุใช้คำสั่งนี้ได้');
+      if (message.author.id !== admin) return message.reply('⚠ คุณไม่สามารถใช้คำสั่งนี้ได้');
       message.channel.send('ขอ Restart ก่อนนะครับ')
       .then(message => bot.users.get(cha).send(scoreStore))
       .then(message => bot.destroy())
@@ -181,11 +200,15 @@ bot.on('message', message => {
         '**dzp.open** : คำสั่งเปิดร้าน\n\n'+
         '**dzp.close** : คำสั่งปิดร้าน\n\n'+
         '**dzp.say** __[ข้อความ]__ : บอทพิมพ์ข้อความตามที่เราพิมพ์\n'+
-        '__ตัวอย่าง__ `dzp.say สวัสดี`\n\n'+
-        '**dzp.embed** [สีเลข6ตัว]__ __[หัวข้อ]__ __[เนื้อหา]__ : บอทจะส่งข้อความแบบมีกรอบ\n'+
-        '__ตัวอย่าง__ `dzp.embed ff5500 ประกาศ วันนี้แอดมินไม่อยู่ ` *(กรุณาเว้นวรรคให้ถูกต้อง)*\n\n'+
+        '__-ตัวอย่าง__ `dzp.say สวัสดี`\n\n'+
+        '**dzp.embed** __[สีเลข6ตัว]__ __[หัวข้อ]__ __[เนื้อหา]__ : บอทจะส่งข้อความแบบมีกรอบ\n'+
+        '__-ตัวอย่าง__ `dzp.embed ff5500 ประกาศ วันนี้แอดมินไม่อยู่ ` *(กรุณาเว้นวรรคให้ถูกต้อง)*\n\n'+
         '**dzp.stock** __[จำนวน]__ : คำสั่ง Stock ที่เหลือในร้าน\n'+
-        '__ตัวอย่าง__ `dzp.stock 99`\n\n'+
+        '__-ตัวอย่าง__ `dzp.stock 99`\n\n'+
+        '**dzp.role** __[1|2|3]__ @member : คำสั่งเพิ่มยศให้ 1.ผู้ซื้อ 2.ผู้ซื้อระดับสูง 3.คนรวยสายเปย์\n'+
+        '__-ตัวอย่าง__ `dzp.role 1 @Chakung`'+
+        '**dzp.settime __[เวลาเปิดปิด]__ : คำสั่งตั้งเวลาเปิด/ปิดร้าน'+
+        '__-ตัวอย่าง__ `dzp.settime 18:00-22:00`'+
         '')
         .setFooter('DZP Shop | สร้างโดย Chakung', bot.user.avatarURL)
         message.channel.sendEmbed(embed);
@@ -247,6 +270,32 @@ bot.on('message', message => {
         .setFooter('DZP Shop', bot.user.avatarURL)
         .setTimestamp();
         message.channel.sendEmbed(embed);
+    }
+    if (command === 'test')
+    {
+        console.log(message.guild.roles);
+    }
+    if (command === 'role')
+    {
+        message.delete()
+        if(!message.member.hasPermission('MANAGE_ROLES')) return message.reply('คุณไม่สามารถใช้คำสั่งให้ยศได้ครับ');
+        let role = message.content.split(' ')[1];
+        let roles = '';
+        let number = parseInt(role);
+        if (role === '') return;
+        if (number > 3 || number < 1) return message.reply(`❌ ไม่พบ role ${number}`);
+        let user_m = message.mentions.members.first();
+        if (number === 1) roles = '';
+        if (number === 2) roles = '';
+        if (number === 3) roles = '';
+        let roleID = message.guild.roles.get(roles);
+        user_m.addRole(roleID).catch(message.error);
+        const mm = new Discord.RichEmbed()
+        .setAuthor(`${user_m.displayName}`, user_m.avatarURL)
+        .setDescription(`คุณ <@${user_m.id}> ได้รับยศ <@${roles}> แล้วครับ`)
+        .setColor(0xffffff)
+        .setFooter(bot.user.displayName+' | สร้างโดย Chakung', bot.user.avatarURL);
+        message.channel.send({embed:mm});
     }
     if (command === 'givevvv')
     {
