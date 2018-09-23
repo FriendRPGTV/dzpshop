@@ -292,9 +292,9 @@ bot.on('message', message => {
         user_m.addRole(roleID).catch(message.error);
         const mm = new Discord.RichEmbed()
         .setAuthor(`${user_m.displayName}`, user_m.avatarURL)
-        .setDescription(`คุณ <@${user_m.id}> ได้รับยศ <@${roles}> แล้วครับ`)
-        .setColor(0xffffff)
-        .setFooter(bot.user.displayName+' | สร้างโดย Chakung', bot.user.avatarURL);
+        .setDescription(`คุณ <@${user_m.id}> ได้รับยศ ${roleID.name} แล้วครับ`)
+        .setColor(0xff0000)
+        .setFooter('DZP Shop | สร้างโดย Chakung', bot.user.avatarURL);
         message.channel.send({embed:mm});
     }
     if (command === 'givevvv')
