@@ -224,7 +224,7 @@ bot.on('message', message => {
         .setFooter('DZP Shop | สร้างโดย Chakung', bot.user.avatarURL)
         message.channel.sendEmbed(embed)
         .then(message => {
-            message.channel.send("@everyone"+` ร้านเปิดแล้วนะงับ ทักหา <@${admin}> เพื่อซื้อได้เลย! `);
+            message.channel.send("@everyone"+` ร้านเปิดแล้วนะงับ ทักหา <@${admin}> หรือ <@490130985057255424> เพื่อซื้อได้เลย! `);
         })
     }
     if (command === 'close')
@@ -285,9 +285,9 @@ bot.on('message', message => {
         if (role === '') return;
         if (number > 3 || number < 1) return message.reply(`❌ ไม่พบ role ${number}`);
         let user_m = message.mentions.members.first();
-        if (number === 1) roles = '';
-        if (number === 2) roles = '';
-        if (number === 3) roles = '';
+        if (number === 1) roles = '470477455564603393';
+        if (number === 2) roles = '470477591510384650';
+        if (number === 3) roles = '477645205479096320';
         let roleID = message.guild.roles.get(roles);
         user_m.addRole(roleID).catch(message.error);
         const mm = new Discord.RichEmbed()
