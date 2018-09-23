@@ -21,7 +21,8 @@ bot.on("ready", () => {
     bot.user.setPresence({ game: { name: `คำสั่ง ${prefix}help | สร้างโดย Chakung#0785` }, type: 0 });
     console.log("[8] DZP Shop bot online! Created by Chakung.");
     let chakung = bot.users.get(cha);
-    let scoreStores = chakung.lastMessage.content;
+    let scoreStores = '';
+    bot.channels.get('493277979074363394').fetchMessage('493281268658864153').then(message => {scoreStores = message.content;});
     let args = scoreStores.split(',,');
     for (let i = 0; i < args.length; i++)
     {
@@ -35,7 +36,7 @@ bot.on("ready", () => {
     setInterval(function(){
       let store = '';
       store += saveScore(store);
-      chakung.send(store);
+      bot.channels.get('493277979074363394').fetchMessage('493281268658864153').then(message => message.edit(store));
     }, 300000);
     
     
