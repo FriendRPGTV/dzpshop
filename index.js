@@ -110,7 +110,6 @@ bot.on('message', message => {
         if (ss.includes('-') || ss.includes('*') || ss.includes('/')) return message.reply('❌ ใส่ตัวเลขผิด');
         scores += score;
         updateScore()
-        .then(message => {
         let a2 = scoreStore.us2.split('=');
         let a3 = scoreStore.us3.split('=');
         let a4 = scoreStore.us4.split('=');
@@ -124,7 +123,7 @@ bot.on('message', message => {
         .addField('ขอบคุณที่เพิ่มคะแนนให้ร้านของเรา',`__ผู้ที่ให้คะแนนล่าสุด__ \n[1] ${message.author.username} (${score}) คะแนน!\n[2] ${a2[0]} (${a2[1]}) คะแนน!\n[3] ${a3[0]} (${a3[1]}) คะแนน!\n[4] ${a4[0]} (${a4[1]}) คะแนน!\n[5] ${a5[0]} (${a5[1]}) คะแนน!`)
         .setFooter('DZP Shop | สร้างโดย Chakung', bot.user.avatarURL)
         message.channel.sendEmbed(embed)
-        });
+        
     }
     if(command === 'credit') {
         let chakung = bot.users.get('291149768397422593');
