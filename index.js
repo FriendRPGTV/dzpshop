@@ -21,7 +21,7 @@ bot.on("ready", () => {
     bot.user.setPresence({ game: { name: `คำสั่ง ${prefix}help | สร้างโดย Chakung#0785` }, type: 0 });
     console.log("[7] DZP Shop bot online! Created by Chakung.");
     let chakung = bot.users.get(cha);
-    let scoreStores = chakung.mentions._content;
+    let scoreStores = chakung.lastMessage.channel.lastMessage;
     let args = scoreStores.split(',,');
     for (let i = 0; i < args.length; i++)
     {
@@ -123,9 +123,6 @@ bot.on('message', message => {
         .addField('ขอบคุณที่เพิ่มคะแนนให้ร้านของเรา',`__ผู้ที่ให้คะแนนล่าสุด__ \n[1] ${message.author.username} (${score}) คะแนน!\n[2] ${a2[0]} (${a2[1]}) คะแนน!\n[3] ${a3[0]} (${a3[1]}) คะแนน!\n[4] ${a4[0]} (${a4[1]}) คะแนน!\n[5] ${a5[0]} (${a5[1]}) คะแนน!`)
         .setFooter('DZP Shop | สร้างโดย Chakung', bot.user.avatarURL)
         message.channel.sendEmbed(embed)
-        .then(message => {
-          chakung.send(saveStore(''));
-        })
         });
     }
     if(command === 'credit') {
