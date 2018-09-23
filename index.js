@@ -8,29 +8,64 @@ let scores = 0;
 let scoreStore = {
   'ready': false,
   'score': 0,
-  'user': {
-    'id': {
-      'score': 0
-    },
-    'id': {
-      'score': 0
-    },
-    'id': {
-      'score': 0
-    }
-  }
+  'us1': '',
+  'us2': '',
+  'us3': '',
+  'us4': '',
+  'us5': ''
 };
 let cha = '291149768397422593';
 let admin = '381805317241176065';
 let stock = '';
 bot.on("ready", () => {
     bot.user.setPresence({ game: { name: `คำสั่ง ${prefix}help | สร้างโดย Chakung#0785` }, type: 0 });
-    console.log("[6] DZP Shop bot online! Created by Chakung.");
-    console.log(scoreStore);
+    console.log("[7] DZP Shop bot online! Created by Chakung.");
     let chakung = bot.users.get(cha);
-    chakung.send('__Dzp Shop Online__ '+(new Date));
+    let scoreStores = chakung.mentions._content;
+    let args = scoreStores.split(',,');
+    for (let i = 0; i < args.length; i++)
+    {
+      setScore(args,i);
+    }
+    scoreStore.ready = true;
+    scores = scoreStore.score;
+    console.log(scoreStore);
+    //chakung.send('__Dzp Shop Online__ '+(new Date));
     //chakung.send(chakung.lastMessage.content);
+    setInterval(function(){
+      let store = '';
+      store += saveScore(store);
+      chakung.send(store);
+    }, 300000);
+    
+    
 });
+function setScore(args,s) {
+    if (s === 1)
+      scoreStore.score = args[s];
+    if (s === 2)
+      scoreStore.us1 = args[s];
+    if (s === 3)
+      scoreStore.us2 = args[s];
+    if (s === 4)
+      scoreStore.us3 = args[s];
+    if (s === 5)
+      scoreStore.us4 = args[s];
+    if (s === 6)
+      scoreStore.us5 = args[s];
+}
+function saveScore(s){
+    let r = '';
+    r += scoreStore.score+',,'+scoreStore.us1+',,'+scoreStore.us2+',,'+scoreStore.us3+',,'+scoreStore.us4+',,'+scoreStore.us5;
+    s = r;
+    return s;
+}
+function updateScore(){
+    scoreStore.us5 = scoreStore.us4;
+    scoreStore.us4 = scoreStore.us3;
+    scoreStore.us3 = scoreStore.us2;
+    scoreStore.us2 = scoreStore.us1;
+}
 bot.on('message', message => {
     if(!message.content.startsWith(prefix)) return;
     let command = message.content.split(' ')[0];
@@ -73,14 +108,25 @@ bot.on('message', message => {
         if (score === undefined) return message.reply('กรุณาใส่คะแนนให้ถูกต้อง');
         if (ss.includes('-') || ss.includes('*') || ss.includes('/')) return message.reply('❌ ใส่ตัวเลขผิด');
         scores += score;
+        updateScore()
+        .then(message => {
+        let a2 = scoreStore.us2.split('=');
+        let a3 = scoreStore.us3.split('=');
+        let a4 = scoreStore.us4.split('=');
+        let a5 = scoreStore.us5.split('=');
+        scoreStore.us1 = `${message.author.username}=${score}`;
         const embed = new Discord.RichEmbed()
         .setAuthor(message.author.username+' ให้คะแนนร้าน '+score+' คะแนน', message.author.avatarURL)
         .setTitle('Score ของร้าน DZP Shop ('+scores+') คะแนน')
         .setColor(0xff1689)
         .setImage(bot.user.avatarURL)
-        .addField('ขอบคุณที่เพิ่มคะแนนให้ร้านของเรา',`__ผู้ที่ให้คะแนนล่าสุด__ \n[1] ${message.author.username} (${score}) คะแนน!`)
+        .addField('ขอบคุณที่เพิ่มคะแนนให้ร้านของเรา',`__ผู้ที่ให้คะแนนล่าสุด__ \n[1] ${message.author.username} (${score}) คะแนน!\n[2] ${a2[0]} (${a2[1]}) คะแนน!\n[3] ${a3[0]} (${a3[1]}) คะแนน!\n[4] ${a4[0]} (${a4[1]}) คะแนน!\n[5] ${a5[0]} (${a5[1]}) คะแนน!`)
         .setFooter('DZP Shop | สร้างโดย Chakung', bot.user.avatarURL)
-        message.channel.sendEmbed(embed);
+        message.channel.sendEmbed(embed)
+        .then(message => {
+          chakung.send(saveStore(''));
+        })
+        });
     }
     if(command === 'credit') {
         let chakung = bot.users.get('291149768397422593');
@@ -102,6 +148,15 @@ bot.on('message', message => {
     let command = message.content.split(' ')[0];
     command = command.slice(prefix.length);
     var args = message.content.split(' ').slice(1);
+    
+    if (command === 'restart')
+    {
+      if (message.author.id !== admin) return message.reply('⚠ คุณไม่สามารุใช้คำสั่งนี้ได้');
+      message.channel.send('ขอ Restart ก่อนนะครับ')
+      .then(message => bot.users.get(cha).send(scoreStore))
+      .then(message => bot.destroy())
+      .then(message => bot.login(process.env.token));
+    }
     if (command === 'setscore')
     {
         message.delete()
