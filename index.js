@@ -224,7 +224,7 @@ bot.on('message', message => {
         .setFooter('DZP Shop | สร้างโดย Chakung', bot.user.avatarURL)
         message.channel.sendEmbed(embed)
         .then(message => {
-            message.channel.send("@everyone"+` ร้านเปิดแล้วนะงับ ทักหา <@${admin}> หรือ <@490130985057255424> เพื่อซื้อได้เลย! `);
+            message.channel.send("@everyone"+` ร้านเปิดแล้วนะงับ ทักหา <@${admin}> เพื่อซื้อได้เลย! `);
         })
     }
     if (command === 'close')
