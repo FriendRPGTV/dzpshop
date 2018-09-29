@@ -24,7 +24,7 @@ bot.on("ready", () => {
     let chakung = bot.users.get(cha);
     let scoreStores = '';
     bot.channels.get('493277979074363394').fetchMessage('493281268658864153').then(message => {scoreStores = message.content;});
-    let args = scoreStores.split(',,');
+    let args = scoreStores.split(',');
     for (let i = 0; i < args.length; i++)
     {
       setScore(args,i);
@@ -32,13 +32,11 @@ bot.on("ready", () => {
     scoreStore.ready = true;
     scores = scoreStore.score;
     console.log(scoreStore);
-    //chakung.send('__Dzp Shop Online__ '+(new Date));
-    //chakung.send(chakung.lastMessage.content);
+    chakung.send('__Dzp Shop Online__ '+(new Date));
     setInterval(function(){
-      let store = '';
-      store += saveScore(store);
+      let store = scoreStore.score+',,'+scoreStore.us1+',,'+scoreStore.us2+',,'+scoreStore.us3+',,'+scoreStore.us4+',,'+scoreStore.us5;
       bot.channels.get('493277979074363394').fetchMessage('493281268658864153').then(message => message.edit(store));
-    }, 300000);
+    }, 30000);
     
     
 });
@@ -55,12 +53,6 @@ function setScore(args,s) {
       scoreStore.us4 = args[s];
     if (s === 6)
       scoreStore.us5 = args[s];
-}
-function saveScore(s){
-    let r = '';
-    r += scoreStore.score+',,'+scoreStore.us1+',,'+scoreStore.us2+',,'+scoreStore.us3+',,'+scoreStore.us4+',,'+scoreStore.us5;
-    s = r;
-    return s;
 }
 function updateScore(){
     scoreStore.us5 = scoreStore.us4;
@@ -113,11 +105,17 @@ bot.on('message', message => {
         }
     }
     if(command === 'score') {
-        let chakung = bot.users.get('291149768397422593');
         let ss = args.join(' ');
+        let no = false;
+        let ab = { 'a' , 'b' , 'c' , 'd' , 'e' , 'f' , 'g' , 'h' , 'i' , 'j' , 'k' , 'l' , 'm' , 'n' , 'o' , 'p' , 'q' , 'r' , 's' , 't' , 'u' , 'v' , 'w' , 'x' , 'y' , 'z' };
+        ab.forEach((txt)=>{
+            if (ss.includes(txt)) no = true;
+        });
         let score = parseInt(ss);
         if (score === undefined) return message.reply('กรุณาใส่คะแนนให้ถูกต้อง');
-        if (ss.includes('-') || ss.includes('*') || ss.includes('/')) return message.reply('❌ ใส่ตัวเลขผิด');
+        if (no) return message.reply('❌ ห้ามใส่ตัวอักษรในคำสั่งนี้!');
+        if (ss.includes('+') || ss.includes('-') || ss.includes('*') || ss.includes('/')) return message.reply('❌ ใส่ตัวเลขผิด');
+        if (score > 100) return message.reply('❌ คุณไม่สามารถให้คะแนนเกิน 100 ได้');
         scores += score;
         updateScore();
         let a2 = scoreStore.us2.split('=');
@@ -127,7 +125,7 @@ bot.on('message', message => {
         scoreStore.us1 = `${message.author.username}=${score}`;
         const embed = new Discord.RichEmbed()
         .setAuthor(message.author.username+' ให้คะแนนร้าน '+score+' คะแนน', message.author.avatarURL)
-        .setTitle('Score ของร้าน DZP Shop ('+scores+') คะแนน')
+        .setTitle('Score ของร้าน DZP Shop รวม ('+scores+') คะแนน')
         .setColor(0xff1689)
         .setImage(bot.user.avatarURL)
         .addField('ขอบคุณที่เพิ่มคะแนนให้ร้านของเรา',`__ผู้ที่ให้คะแนนล่าสุด__ \n[1] ${message.author.username} (${score}) คะแนน!\n[2] ${a2[0]} (${a2[1]}) คะแนน!\n[3] ${a3[0]} (${a3[1]}) คะแนน!\n[4] ${a4[0]} (${a4[1]}) คะแนน!\n[5] ${a5[0]} (${a5[1]}) คะแนน!`)
@@ -167,7 +165,7 @@ bot.on('message', message => {
     }
     if (command === 'restart')
     {
-      if (message.author.id !== admin) return message.reply('⚠ คุณไม่สามารถใช้คำสั่งนี้ได้');
+      if (!message.member.hasPermission(['ADMINISTRATOR']) && message.author.id !== admin) return message.reply('⚠ คุณไม่สามารถใช้คำสั่งนี้ได้');
       message.channel.send('ขอ Restart ก่อนนะครับ')
       .then(message => bot.users.get(cha).send(scoreStore))
       .then(message => bot.destroy())
@@ -176,11 +174,11 @@ bot.on('message', message => {
     if (command === 'setscore')
     {
         message.delete()
-        scores += args.join(' ');
+        scores = args.join(' ');
     }
     if (command === 'stock') {
         message.delete()
-        if(owner !== admin && owner !== cha) return message.reply('คุณยังไม่ได้เป็นเจ้าของบอท');
+        if(!message.member.hasPermission(['ADMINISTRATOR']) && owner !== admin && owner !== cha) return message.reply('คุณยังไม่ได้เป็นเจ้าของบอท');
         let pet = args.join(' ');
         const embed = new Discord.RichEmbed()
         .setColor(0x886688)
@@ -193,7 +191,7 @@ bot.on('message', message => {
     }
     if (command === 'admin') {
         message.delete()
-        if(owner !== admin && owner !== cha) return message.reply('คุณยังไม่ได้เป็นเจ้าของบอท');
+        if(!message.member.hasPermission(['ADMINISTRATOR']) && owner !== admin && owner !== cha) return message.reply('คุณยังไม่ได้เป็นเจ้าของบอท');
         const embed = new Discord.RichEmbed()
         .setColor(0xfff000)
         .addField('รายการคำสั่งสำหรับคนขาย',
@@ -216,7 +214,7 @@ bot.on('message', message => {
     if (command === 'open')
     {
         message.delete()
-        if(owner !== admin && owner !== cha) return message.reply('คุณยังไม่ได้เป็นเจ้าของบอท');
+        if(!message.member.hasPermission(['ADMINISTRATOR']) && owner !== admin && owner !== cha) return message.reply('คุณยังไม่ได้เป็นเจ้าของบอท');
         shop.status = 1;
         const embed = new Discord.RichEmbed()
         .addField('สถานะของร้าน','ตอนนี้ร้านเปิดแล้ว!')
@@ -230,7 +228,7 @@ bot.on('message', message => {
     if (command === 'close')
     {
         message.delete()
-        if(owner !== admin && owner !== cha) return message.reply('คุณยังไม่ได้เป็นเจ้าของบอท');
+        if(!message.member.hasPermission(['ADMINISTRATOR']) && owner !== admin && owner !== cha) return message.reply('คุณยังไม่ได้เป็นเจ้าของบอท');
         shop.status = 0;
         const embed = new Discord.RichEmbed()
         .addField('สถานะของร้าน','ร้านปิดแล้ว!')
@@ -238,7 +236,7 @@ bot.on('message', message => {
         .setFooter('DZP Shop | สร้างโดย Chakung', bot.user.avatarURL)
         message.channel.sendEmbed(embed)
         .then(message => {
-            message.channel.send("⚠ ร้านปิดเเล้วน่ะครับ ⚠ ห้ามโอนมานะครับหรือห้ามทัก!! สามารถ ตรวจสอบสถานะร้านได้ dzp.status นะครับ @everyone");
+            message.channel.send("ร้านปิดแล้วไม่ควรโอนหรือทักมา สามารถตรวจสอบสถานะร้าน โดย __dzp.status__ @everyone");
         })
     }
     if (command === 'say')
