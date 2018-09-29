@@ -222,7 +222,7 @@ bot.on('message', message => {
         .setFooter('DZP Shop | สร้างโดย Chakung', bot.user.avatarURL)
         message.channel.sendEmbed(embed)
         .then(message => {
-            message.channel.send("@everyone"+` ร้านเปิดแล้ว ทักหา <@${admin}> เพื่อซื้อได้เลย! ตรวจสอบสถานะร้านโดย __dzp.status__ `);
+            message.channel.send("@everyone"+` ร้านเปิดแล้ว ทักหา <@${admin}> เพื่อซื้อได้เลย! ตรวจสอบสถานะร้านโดย **dzp.status** `);
         })
     }
     if (command === 'close')
@@ -236,7 +236,7 @@ bot.on('message', message => {
         .setFooter('DZP Shop | สร้างโดย Chakung', bot.user.avatarURL)
         message.channel.sendEmbed(embed)
         .then(message => {
-            message.channel.send("ร้านปิดแล้วไม่ควรโอนหรือทักมา สามารถตรวจสอบสถานะร้าน โดย __dzp.status__ @everyone");
+            message.channel.send("ร้านปิดแล้วไม่ควรโอนหรือทักมา สามารถตรวจสอบสถานะร้าน โดย **dzp.status** @everyone");
         })
     }
     if (command === 'say')
