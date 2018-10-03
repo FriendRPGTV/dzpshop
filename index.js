@@ -24,7 +24,7 @@ bot.on("ready", () => {
     let chakung = bot.users.get(cha);
     let scoreStores = '';
     bot.channels.get('493277979074363394').fetchMessage('496976005903417344').then(message => {scoreStores = message.content;});
-    let args = scoreStores.split(',');
+    let args = scoreStores.split(',,');
     for (let i = 0; i < args.length; i++)
     {
       setScore(args,i);
