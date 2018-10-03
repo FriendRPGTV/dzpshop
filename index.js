@@ -23,7 +23,7 @@ bot.on("ready", () => {
     console.log("[8] DZP Shop bot online! Created by Chakung.");
     let chakung = bot.users.get(cha);
     let scoreStores = '';
-    bot.channels.get('493277979074363394').fetchMessage('493281268658864153').then(message => {scoreStores = message.content;});
+    bot.channels.get('493277979074363394').fetchMessage('496976005903417344').then(message => {scoreStores = message.content;});
     let args = scoreStores.split(',');
     for (let i = 0; i < args.length; i++)
     {
@@ -35,7 +35,7 @@ bot.on("ready", () => {
     chakung.send('__Dzp Shop Online__ '+(new Date));
     setInterval(function(){
       let store = scoreStore.score+',,'+scoreStore.us1+',,'+scoreStore.us2+',,'+scoreStore.us3+',,'+scoreStore.us4+',,'+scoreStore.us5;
-      bot.channels.get('493277979074363394').fetchMessage('493281268658864153').then(message => message.edit(store));
+      bot.channels.get('493277979074363394').fetchMessage('496976005903417344').then(message => message.edit(store));
     }, 30000);
     
     
@@ -182,11 +182,11 @@ bot.on('message', message => {
         let pet = args.join(' ');
         const embed = new Discord.RichEmbed()
         .setColor(0x886688)
-        .addField(`StockPet ทั้งหมด ${pet} ตัว`,'รีบซื้อก่อนหมดน้า')
+        .addField(`StockPet ทั้งหมด ${pet} ตัว`,`ร้านเปิดเเล้วนะครับ ถ้าจะซื้อPet ติดต่อ <@${admin}> เพื่อความรวดเร็ว ตอบเร็วๆเเละส่งชื่อมานะครับ`)
         .setFooter('DZP Shop | สร้างโดย Chakung', bot.user.avatarURL)
         message.channel.sendEmbed(embed)
         .then(message => {
-            message.channel.send(`ร้านเปิดเเล้วนะครับ ถ้าจะซื้อPet ติดต่อ <@${admin}> เพื่อความรวดเร็ว ตอบเร็วๆเเละส่งชื่อมานะครับ ตอนนี้ StockPet มีอยู่ ${pet} @everyone`);
+            message.channel.send(`ตอนนี้StockPet มีอยู่ ${pet} @everyone`);
         });
     }
     if (command === 'admin') {
