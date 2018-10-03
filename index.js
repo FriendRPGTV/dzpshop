@@ -186,7 +186,7 @@ bot.on('message', message => {
         .setFooter('DZP Shop | สร้างโดย Chakung', bot.user.avatarURL)
         message.channel.sendEmbed(embed)
         .then(message => {
-            message.channel.send(`ร้านเปิดเเล้วนะครับ ถ้าจะซื้อPet ติดต่อ <@${admin}> เพื่อความรวดเร็ว ตอบเร็วๆเเละส่งชื่อมานะครับ \nตอนนี้ StockPet มีอยู่ ${pet} @everyone`);
+            message.channel.send(`ร้านเปิดเเล้วนะครับ ถ้าจะซื้อPet ติดต่อ <@${admin}> เพื่อความรวดเร็ว ตอบเร็วๆเเละส่งชื่อมานะครับ ตอนนี้ StockPet มีอยู่ ${pet} @everyone`);
         });
     }
     if (command === 'admin') {
