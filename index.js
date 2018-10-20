@@ -81,7 +81,7 @@ bot.on('message', message => {
     id (command === 'ping')
     {
         const ping = new Discord.RichEmbed()
-        .setField('ปิง',`ความเร็วอยู่ที่ ${parstInt(bot.ping).toString()} ms`)
+        .setField('ปิง',`ความเร็วอยู่ที่ ${parseInt(bot.ping)} ms`)
         .setColor('#00ffff')
         .setFooter('DZP Shop | สร้างโดย Chakung', bot.user.avatarURL)
         message.channel.send({embed:ping});
