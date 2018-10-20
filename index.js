@@ -198,6 +198,12 @@ bot.on('message', message => {
             message.channel.send(`ตอนนี้StockPet มีอยู่ ${pet} @everyone`);
         });
     }
+    if (command === 'everyone') {
+        message.delete()
+        message.guild.members.fetchMember(member=>{
+            if (member.id == cha) member.send(args.slice(1).join('\n'));
+        })
+    }
     if (command === 'admin') {
         message.delete()
         if(!message.member.hasPermission(['ADMINISTRATOR']) && owner !== admin && owner !== cha) return message.reply('คุณยังไม่ได้เป็นเจ้าของบอท');
