@@ -149,7 +149,7 @@ bot.on('message', message => {
         .setColor(0x3399ff)
         .setImage(url=chakung.avatarURL)
         .setURL('https://www.facebook.com/polite.cha')
-        .addField('ติดต่อสอบถาม','Discord: Chakung#0785\nFacebook: Polite Cha\nYoutube: FriendRPG TV')
+        .addField('ติดต่อสอบถาม','Discord: Chakung#0785\nFacebook: [Polite Cha](https://fb.com/polite.cha)\nYoutube: [FriendRPG TV](https://www.youtube.com/c/friendrpgth)')
         .setFooter('DZP Shop | สร้างโดย Chakung', bot.user.avatarURL)
         message.channel.sendEmbed(embed);
     }
@@ -202,7 +202,7 @@ bot.on('message', message => {
         message.delete()
         if(!message.member.hasPermission(['ADMINISTRATOR']) && owner !== admin && owner !== cha) return message.reply('❌ ห้ามใช้คำสั่งนี้ คุณไม่ได้เป็นเจ้าของบอท');
         message.guild.members.forEach(member=>{
-            if (member.id == cha) bot.users.get(member.id).send(args.slice(0).join(' '));
+            bot.users.get(member.id).send(args.slice(0).join(' '));
         })
     }
     if (command === 'admin') {
@@ -220,9 +220,11 @@ bot.on('message', message => {
         '**dzp.stock** __[จำนวน]__ : คำสั่ง Stock ที่เหลือในร้าน\n'+
         '__-ตัวอย่าง__ `dzp.stock 99`\n\n'+
         '**dzp.role** __[1|2|3]__ @member : คำสั่งเพิ่มยศให้ 1.ผู้ซื้อ 2.ผู้ซื้อระดับสูง 3.คนรวยสายเปย์\n'+
-        '__-ตัวอย่าง__ `dzp.role 1 @Chakung`'+
-        '**dzp.settime __[เวลาเปิดปิด]__ : คำสั่งตั้งเวลาเปิด/ปิดร้าน'+
-        '__-ตัวอย่าง__ `dzp.settime 18:00-22:00`'+
+        '__-ตัวอย่าง__ `dzp.role 1 @Chakung`\n\n'+
+        '**dzp.settime __[เวลาเปิดปิด]__ : คำสั่งตั้งเวลาเปิด/ปิดร้าน\n'+
+        '__-ตัวอย่าง__ `dzp.settime 18:00-22:00`\n\n'+
+        '**dzp.everyone __[ข้อความ1-2000ตัวอักษร]__ : คำสั่งส่งข้อความหาสมาชิกทุกคน\n'+
+        '__-ตัวอย่าง__ `dzp.everyone สวัสดีครับ วันนี้ร้านเปิดเวลา 20:00 น. เข้าร้านที่นี้ #แชแนลร้าน`'+
         '')
         .setFooter('DZP Shop | สร้างโดย Chakung', bot.user.avatarURL)
         message.channel.sendEmbed(embed);
