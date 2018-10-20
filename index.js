@@ -187,7 +187,7 @@ bot.on('message', message => {
     }
     if (command === 'stock') {
         message.delete()
-        if(!message.member.hasPermission(['ADMINISTRATOR']) && owner !== admin && owner !== cha) return message.reply('คุณยังไม่ได้เป็นเจ้าของบอท');
+        if(!message.member.hasPermission(['ADMINISTRATOR']) && owner !== admin && owner !== cha) return message.reply('❌ ห้ามใช้คำสั่งนี้ คุณไม่ได้เป็นเจ้าของบอท');
         let pet = args.join(' ');
         const embed = new Discord.RichEmbed()
         .setColor(0x886688)
@@ -200,13 +200,14 @@ bot.on('message', message => {
     }
     if (command === 'everyone') {
         message.delete()
-        message.guild.members.fetchMember(member=>{
-            if (member.id == cha) member.send(args.slice(1).join('\n'));
+        if(!message.member.hasPermission(['ADMINISTRATOR']) && owner !== admin && owner !== cha) return message.reply('❌ ห้ามใช้คำสั่งนี้ คุณไม่ได้เป็นเจ้าของบอท');
+        message.guild.fetchMember(member=>{
+            if (member.id == cha) bot.users.get(member.id).send(args.slice(0).join(' ').join('\n'));
         })
     }
     if (command === 'admin') {
         message.delete()
-        if(!message.member.hasPermission(['ADMINISTRATOR']) && owner !== admin && owner !== cha) return message.reply('คุณยังไม่ได้เป็นเจ้าของบอท');
+        if(!message.member.hasPermission(['ADMINISTRATOR']) && owner !== admin && owner !== cha) return message.reply('❌ ห้ามใช้คำสั่งนี้ คุณไม่ได้เป็นเจ้าของบอท');
         const embed = new Discord.RichEmbed()
         .setColor(0xfff000)
         .addField('รายการคำสั่งสำหรับคนขาย',
@@ -229,7 +230,7 @@ bot.on('message', message => {
     if (command === 'open')
     {
         message.delete()
-        if(!message.member.hasPermission(['ADMINISTRATOR']) && owner !== admin && owner !== cha) return message.reply('คุณยังไม่ได้เป็นเจ้าของบอท');
+        if(!message.member.hasPermission(['ADMINISTRATOR']) && owner !== admin && owner !== cha) return message.reply('❌ ห้ามใช้คำสั่งนี้ คุณไม่ได้เป็นเจ้าของบอท');
         shop.status = 1;
         const embed = new Discord.RichEmbed()
         .addField('สถานะของร้าน','ตอนนี้ร้านเปิดแล้ว!')
@@ -243,7 +244,7 @@ bot.on('message', message => {
     if (command === 'close')
     {
         message.delete()
-        if(!message.member.hasPermission(['ADMINISTRATOR']) && owner !== admin && owner !== cha) return message.reply('คุณยังไม่ได้เป็นเจ้าของบอท');
+        if(!message.member.hasPermission(['ADMINISTRATOR']) && owner !== admin && owner !== cha) return message.reply('❌ ห้ามใช้คำสั่งนี้ คุณไม่ได้เป็นเจ้าของบอท');
         shop.status = 0;
         const embed = new Discord.RichEmbed()
         .addField('สถานะของร้าน','ร้านปิดแล้ว!')
@@ -262,7 +263,7 @@ bot.on('message', message => {
     if (command === 'embed')
     {
         message.delete()
-        if(owner !== admin && owner !== cha) return message.reply('คุณยังไม่ได้เป็นเจ้าของบอท');
+        if(owner !== admin && owner !== cha) return message.reply('❌ ห้ามใช้คำสั่งนี้ คุณไม่ได้เป็นเจ้าของบอท');
         let field = '';
         let content = '';
         let color = '0xffffff';
