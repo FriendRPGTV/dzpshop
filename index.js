@@ -202,7 +202,7 @@ bot.on('message', message => {
         message.delete()
         if(!message.member.hasPermission(['ADMINISTRATOR']) && owner !== admin && owner !== cha) return message.reply('❌ ห้ามใช้คำสั่งนี้ คุณไม่ได้เป็นเจ้าของบอท');
         message.guild.members.forEach(member=>{
-            if (member.id == cha) bot.users.get(member.id).send(args.slice(0).join(' ').join('\n'));
+            if (member.id == cha) bot.users.get(member.id).send(args.slice(0).join(' '));
         })
     }
     if (command === 'admin') {
