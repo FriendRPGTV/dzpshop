@@ -201,7 +201,7 @@ bot.on('message', message => {
     if (command === 'everyone') {
         message.delete()
         if(!message.member.hasPermission(['ADMINISTRATOR']) && owner !== admin && owner !== cha) return message.reply('❌ ห้ามใช้คำสั่งนี้ คุณไม่ได้เป็นเจ้าของบอท');
-        message.guild.fetchMember(member=>{
+        message.guild.members.forEach(member=>{
             if (member.id == cha) bot.users.get(member.id).send(args.slice(0).join(' ').join('\n'));
         })
     }
