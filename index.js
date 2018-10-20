@@ -69,6 +69,7 @@ bot.on('message', message => {
         const embed = new Discord.RichEmbed()
         .addField('รายการคำสั่ง',
         '**dzp.help** : คำสั่งช่วยเหลือ\n'+
+        '"*dzp.ping** : คำสั่งดูความเร็วของบอท\n'+
         '**dzp.time** : คำสั่งดูเวลาเปิดร้าน\n'+
         '**dzp.status** : คำสั่งดูสถานะว่าร้านเปิดหรือปิด\n'+
         '**dzp.score** __[คะแนน]__ : คำสั่งสำหรับลูกค้าสามารถเพิ่มคะแนนให้ร้าน\n__ตัวอย่าง__ `dzp.score 100`\n'+
@@ -76,6 +77,14 @@ bot.on('message', message => {
         .setColor(0x00ccff)
         .setFooter('DZP Shop | สร้างโดย Chakung', bot.user.avatarURL)
         message.channel.sendEmbed(embed);
+    }
+    id (command === 'ping')
+    {
+        const ping = new Discord.RichEmbed()
+        .setField('ปิง',`ความเร็วอยู่ที่ ${parstInt(bot.ping).toString()} ms`)
+        .setColor('#00ffff')
+        .setFooter('DZP Shop | สร้างโดย Chakung', bot.user.avatarURL)
+        message.channel.send({embed:ping});
     }
     if (command === 'time')
     {
