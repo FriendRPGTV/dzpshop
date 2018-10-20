@@ -78,13 +78,13 @@ bot.on('message', message => {
         .setFooter('DZP Shop | สร้างโดย Chakung', bot.user.avatarURL)
         message.channel.sendEmbed(embed);
     }
-    id (command === 'ping')
+    if (command === 'ping')
     {
-        const ping = new Discord.RichEmbed()
-        .addField('ปิง',`ความเร็วอยู่ที่ ${parseInt(bot.ping)} ms`)
-        .setColor('#00ffff')
+        const embed = new Discord.RichEmbed()
+        .addField('ปิง','ตอนนี้อยู่ที่ '+parseInt(bot.ping)+' ms')
+        .setColor(0x00ffff)
         .setFooter('DZP Shop | สร้างโดย Chakung', bot.user.avatarURL)
-        message.channel.send({embed:ping});
+        message.channel.sendEmbed(embed)
     }
     if (command === 'time')
     {
