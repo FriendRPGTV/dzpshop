@@ -196,7 +196,7 @@ bot.on('message', message => {
         let pet = args.join(' ');
         const embed = new Discord.RichEmbed()
         .setColor(0x886688)
-        .addField(`StockPet ทั้งหมด ${pet} ตัว`,`ร้านเปิดเเล้วนะครับ ถ้าจะซื้อPet ติดต่อ <@${admin}> เพื่อความรวดเร็ว ตอบเร็วๆเเละส่งชื่อมานะครับ`)
+        .addField(`StockPet ทั้งหมด ${pet} ตัว`,`ร้านเปิดเเล้วนะครับ ถ้าจะซื้อPet ติดต่อ <@${seller}> เพื่อความรวดเร็ว ตอบเร็วๆเเละส่งชื่อมานะครับ`)
         .setFooter('DZP Shop | สร้างโดย Chakung', bot.user.avatarURL)
         message.channel.sendEmbed(embed)
         .then(message => {
