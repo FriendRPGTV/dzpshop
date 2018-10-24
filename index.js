@@ -17,11 +17,14 @@ let scoreStore = {
 };
 let cha = '291149768397422593';
 let admin = '381805317241176065';
+let seller = '428165664889634835';
 let stock = '';
 bot.on("ready", () => {
     bot.user.setPresence({ game: { name: `คำสั่ง ${prefix}help | สร้างโดย Chakung#0785` }, type: 0 });
     console.log("[8] DZP Shop bot online! Created by Chakung.");
     let chakung = bot.users.get(cha);
+    let sell = bot.users.get(seller);
+    let adm = bot.users.get(admin);
     let scoreStores = '';
     bot.channels.get('493277979074363394').fetchMessage('496976005903417344').then(message => {scoreStores = message.content;});
     let args = scoreStores.split(',,');
@@ -33,10 +36,12 @@ bot.on("ready", () => {
     scores = scoreStore.score;
     console.log(scoreStore);
     chakung.send('__Dzp Shop Online__ '+(new Date));
+    sell.send('__Dzp Shop Online__ '+(new Date));
+    adm.send('__Dzp Shop Online__ '+(new Date));
     setInterval(function(){
       let store = scoreStore.score+',,'+scoreStore.us1+',,'+scoreStore.us2+',,'+scoreStore.us3+',,'+scoreStore.us4+',,'+scoreStore.us5;
       bot.channels.get('493277979074363394').fetchMessage('496976005903417344').then(message => message.edit(store));
-    }, 30000);
+    }, 10000);
     
     
 });
@@ -240,7 +245,7 @@ bot.on('message', message => {
         .setFooter('DZP Shop | สร้างโดย Chakung', bot.user.avatarURL)
         message.channel.sendEmbed(embed)
         .then(message => {
-            message.channel.send("@everyone"+` ร้านเปิดแล้ว ทักหา <@${admin}> เพื่อซื้อได้เลย! ตรวจสอบสถานะร้านโดย **dzp.status** `);
+            message.channel.send("@everyone"+` ร้านเปิดแล้ว ทักหา <@${seller}> เพื่อซื้อได้เลย! ตรวจสอบสถานะร้านโดย **dzp.status** `);
         })
     }
     if (command === 'close')
