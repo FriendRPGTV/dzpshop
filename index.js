@@ -17,7 +17,7 @@ let scoreStore = {
 };
 let cha = '291149768397422593';
 let admin = '381805317241176065';
-let seller = '428165664889634835';
+let seller = '363213394012143627';
 let stock = '';
 bot.on("ready", () => {
     bot.user.setPresence({ game: { name: `คำสั่ง ${prefix}help | สร้างโดย Chakung#0785` }, type: 0 });
@@ -41,9 +41,10 @@ bot.on("ready", () => {
     setInterval(function(){
       let store = scoreStore.score+',,'+scoreStore.us1+',,'+scoreStore.us2+',,'+scoreStore.us3+',,'+scoreStore.us4+',,'+scoreStore.us5;
       bot.channels.get('493277979074363394').fetchMessage('496976005903417344').then(message => message.edit(store));
-    }, 10000);
-    
-    
+    }, 5000);
+    setInterval(function(){
+      bot.channels.get('493277979074363394').fetchMessage('510593716285865984').then(message => time = message);
+    }, 5000);
 });
 function setScore(args,s) {
     if (s === 1)
@@ -171,6 +172,7 @@ bot.on('message', message => {
         message.delete()
         if(!message.member.hasPermission(['ADMINISTRATOR']) && owner !== cha) return message.reply(`❌ คุณไม่ได้รับอนุญาติให้ใช้คำสั่ง ~~${message.content}~~`);
         time = args.join(' ');
+        bot.channels.get('493277979074363394').fetchMessage('510593716285865984').then(message => message.edit(time));
         const embed = new Discord.RichEmbed()
         .addField('ตั้งเวลา','เวลา : '+time)
         .setColor(0xffffff)
